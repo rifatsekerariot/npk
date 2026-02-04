@@ -208,11 +208,13 @@ step_install_python_packages() {
     
     # Install from requirements.txt
     if [ -f "$SCRIPT_DIR/requirements.txt" ]; then
-        pip3 install -r "$SCRIPT_DIR/requirements.txt" --quiet
+        # Use --break-system-packages for IoT device (single-purpose system)
+        # This is necessary on newer Raspberry Pi OS versions (PEP 668)
+        pip3 install -r "$SCRIPT_DIR/requirements.txt" --break-system-packages --quiet
         print_success "Python packages installed"
     else
         print_warning "requirements.txt not found, installing packages manually..."
-        pip3 install pyserial minimalmodbus paho-mqtt PyYAML --quiet
+        pip3 install pyserial minimalmodbus paho-mqtt PyYAML --break-system-packages --quiet
         print_success "Core Python packages installed"
     fi
 }
