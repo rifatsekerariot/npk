@@ -94,7 +94,7 @@ class NPKSensorReader:
         try:
             value = self.instrument.read_register(
                 register_address, 
-                numberOfDecimals=decimals,
+                number_of_decimals=decimals,
                 functioncode=3,  # Read Holding Registers
                 signed=signed
             )
