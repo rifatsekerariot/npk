@@ -1,0 +1,39 @@
+[Unit]
+Description=NPK Sensor Monitor Service
+After=network-online.target
+Wants=network-online.target
+Documentation=https://github.com/yourusername/npk-monitor
+
+[Service]
+Type=simple
+User=root
+Group=root
+
+# Working directory
+WorkingDirectory=/opt/npk-monitor
+
+# Start command
+ExecStart=/usr/bin/python3 -u /opt/npk-monitor/src/main.py --config /etc/npk-monitor/config.yaml
+
+# Restart policy
+Restart=always
+RestartSec=10
+
+# Logging
+StandardOutput=append:/var/log/npk-monitor/npk-monitor.log
+StandardError=append:/var/log/npk-monitor/npk-monitor.error.log
+SyslogIdentifier=npk-monitor
+
+# Environment
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONPATH=/opt/npk-monitor/src
+
+# Security settings (optional - uncomment for hardening)
+# NoNewPrivileges=true
+# PrivateTmp=true
+# ProtectSystem=strict
+# ProtectHome=true
+# ReadWritePaths=/var/log/npk-monitor
+
+[Install]
+WantedBy=multi-user.target
