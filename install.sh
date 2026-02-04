@@ -180,13 +180,17 @@ step_install_application() {
         exit 1
     fi
     
-    # Copy configuration
+    # Copy configuration (use example file if config.yaml doesn't exist)
     if [ -f "$SCRIPT_DIR/config/config.yaml" ]; then
         cp "$SCRIPT_DIR/config/config.yaml" "$CONFIG_DIR/config.yaml"
         chmod 644 "$CONFIG_DIR/config.yaml"
         print_success "Configuration file copied"
+    elif [ -f "$SCRIPT_DIR/config/config.example.yaml" ]; then
+        cp "$SCRIPT_DIR/config/config.example.yaml" "$CONFIG_DIR/config.yaml"
+        chmod 644 "$CONFIG_DIR/config.yaml"
+        print_success "Configuration file created from example"
     else
-        print_error "Configuration file not found!"
+        print_error "No configuration file found (config.yaml or config.example.yaml)!"
         exit 1
     fi
     
