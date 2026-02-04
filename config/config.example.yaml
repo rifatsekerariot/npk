@@ -1,0 +1,45 @@
+# NPK Sensor Configuration
+sensor:
+  port: '/dev/ttyS0'          # Serial port for RS485 HAT (ttyS0 for Raspberry Pi UART)
+  slave_id: 1                 # Modbus slave ID
+  baudrate: 4800              # Communication baud rate (4800 or 9600 typical)
+  timeout: 1.0                # Serial timeout in seconds
+  model: 'Generic NPK RS485'  # Sensor model name
+  
+  # Modbus register addresses (customize based on your sensor manual)
+  registers:
+    nitrogen: 0x001E          # Nitrogen register (mg/kg)
+    phosphorus: 0x001F        # Phosphorus register (mg/kg)
+    potassium: 0x0020         # Potassium register (mg/kg)
+    temperature: 0x0012       # Temperature register (°C) - optional
+    moisture: 0x0013          # Moisture register (%) - optional
+    ph: 0x0006                # pH register - optional
+    ec: 0x0015                # EC register (μS/cm) - optional
+
+# ThingsBoard Configuration
+thingsboard:
+  host: 'demo.thingsboard.io' # ThingsBoard server hostname
+                              # For cloud: demo.thingsboard.io or thingsboard.cloud
+                              # For self-hosted: your-server-ip or domain
+  
+  access_token: 'YOUR_DEVICE_ACCESS_TOKEN_HERE'  # Device access token from ThingsBoard
+                                                  # Get this from: Device > Copy Access Token
+                                                  # Example: A1B2C3D4E5F6G7H8I9J0
+
+# MQTT Configuration
+mqtt:
+  port: 1883                  # MQTT broker port (1883 for non-SSL, 8883 for SSL)
+  keepalive: 60               # Keep-alive interval in seconds
+  qos: 1                      # Quality of Service (0, 1, or 2)
+  include_timestamp: false    # Include timestamp in telemetry (true/false)
+
+# Application Settings
+application:
+  reading_interval: 60        # Sensor reading interval in seconds (60 = 1 minute)
+  log_level: 'INFO'           # Logging level (DEBUG, INFO, WARNING, ERROR)
+
+# Device Information (published as attributes)
+device:
+  name: 'NPK Sensor 01'       # Device name
+  location: 'Field A'         # Installation location
+  description: 'NPK soil sensor with RS485 interface'
